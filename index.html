@@ -116,44 +116,122 @@
       max-width: 90%;
       height: auto;
       border-radius: 1rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .screenshot img:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+    }
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+    nav a:hover span span {
+      width: 100%;
     }
   </style>
 </head>
 <body>
-  <header>
-    <div style="display: flex; justify-content: space-between; align-items: center;">
+  <header style="background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid rgba(255,255,255,0.1);">
+    <div style="display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 1rem 1.5rem;">
       <div style="display: flex; align-items: center; gap: 1rem;">
-        <img src="https://i.imgur.com/KE5BRZX.png" alt="Meteor Logo" style="width: 50px; height: 50px;">
-        <h1>Meteor</h1>
+        <img src="https://i.imgur.com/KE5BRZX.png" alt="Meteor Logo" style="width: 40px; height: 40px; filter: drop-shadow(0 0 5px rgba(59, 130, 246, 0.5));">
+        <h1 style="background: linear-gradient(90deg, #60A5FA 0%, #3B82F6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 1.5rem; font-weight: 800;">Meteor</h1>
       </div>
-      <nav>
-        <a href="#download">Download</a>
-        <a href="https://discord.gg/6PTAGG96Cm">Discord</a>
+      <nav style="display: flex; gap: 1.5rem;">
+        <a href="#features" style="color: #D1D5DB; text-decoration: none; font-weight: 500; transition: all 0.3s ease; position: relative; padding: 0.5rem 0;">
+          <span style="position: relative;">
+            Features
+            <span style="position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: #3B82F6; transition: width 0.3s ease;"></span>
+          </span>
+        </a>
+        <a href="#how-it-works" style="color: #D1D5DB; text-decoration: none; font-weight: 500; transition: all 0.3s ease; position: relative; padding: 0.5rem 0;">
+          <span style="position: relative;">
+            How It Works
+            <span style="position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: #3B82F6; transition: width 0.3s ease;"></span>
+          </span>
+        </a>
+        <a href="#download" style="color: #D1D5DB; text-decoration: none; font-weight: 500; transition: all 0.3s ease; position: relative; padding: 0.5rem 0;">
+          <span style="position: relative;">
+            Download
+            <span style="position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: #3B82F6; transition: width 0.3s ease;"></span>
+          </span>
+        </a>
+        <a href="https://discord.gg/6PTAGG96Cm" style="color: #D1D5DB; text-decoration: none; font-weight: 500; transition: all 0.3s ease; display: flex; align-items: center; gap: 0.5rem;">
+          <span>Discord</span>
+          <span style="display: inline-block; width: 8px; height: 8px; background: #3B82F6; border-radius: 50%; animation: pulse 1.5s infinite;"></span>
+        </a>
       </nav>
     </div>
   </header>
 
-  <main class="hero">
-    <h2>Meteor</h2>
-    <p>Making exploiting more fun with Meteor Executor.</p>
-    <a href="#download" class="btn-primary">Download Now</a>
+  <main class="hero" style="background: linear-gradient(135deg, #000000 0%, #1a1a2e 100%); padding: 6rem 1.5rem; position: relative; overflow: hidden;">
+    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('https://i.imgur.com/KE5BRZX.png') center/contain no-repeat; opacity: 0.03; z-index: 0;"></div>
+    <div style="position: relative; z-index: 1; max-width: 800px; margin: 0 auto;">
+      <h2 style="font-size: 4rem; background: linear-gradient(90deg, #60A5FA 0%, #3B82F6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1.5rem;">Meteor Executor</h2>
+      <p style="font-size: 1.25rem; color: #D1D5DB; margin-bottom: 2rem;">The next-generation Roblox executor with military-grade security powered by Rankalf's API</p>
+      <div style="display: flex; gap: 1rem; justify-content: center;">
+        <a href="#download" class="btn-primary" style="background: linear-gradient(90deg, #3B82F6 0%, #2563EB 100%); box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);">Download Now</a>
+        <a href="#how-it-works" style="display: inline-block; padding: 0.75rem 2rem; border: 1px solid #3B82F6; border-radius: 9999px; font-size: 1.125rem; color: #3B82F6; text-decoration: none; transition: all 0.3s ease;">Learn More</a>
+      </div>
+    </div>
   </main>
 
   <div class="screenshot">
     <img src="https://i.imgur.com/2Bt40yg.png" alt="Meteor Debugger Screenshot">
   </div>
 
+  <section id="features">
+    <h3>Key Features</h3>
+    <ul style="max-width: 768px; margin: 0 auto; color: #D1D5DB;">
+      <li>✔️ Easy-to-use interface with dark theme</li>
+      <li>✔️ Built-in script hub with auto-updates</li>
+      <li>✔️ Advanced debugging tools</li>
+      <li>✔️ Frequent updates with new features</li>
+      <li>✔️ Lightweight and fast performance</li>
+    </ul>
+  </section>
+
+  <section id="how-it-works" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); padding: 4rem 1.5rem; border-radius: 1rem; margin: 2rem auto; max-width: 1200px;">
+    <h3 style="text-align: center; font-size: 2rem; margin-bottom: 2rem;">How It Works</h3>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+      <div style="background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 1rem; backdrop-filter: blur(10px);">
+        <h4 style="color: #60A5FA; margin-bottom: 1rem;">1. Secure Connection</h4>
+        <p style="color: #D1D5DB;">Meteor establishes a secure connection with Rankalf's trusted API to ensure safe script execution without detection.</p>
+      </div>
+      <div style="background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 1rem; backdrop-filter: blur(10px);">
+        <h4 style="color: #60A5FA; margin-bottom: 1rem;">2. Advanced Injection</h4>
+        <p style="color: #D1D5DB;">Our proprietary injection method bypasses anti-cheat systems while maintaining stability and performance.</p>
+      </div>
+      <div style="background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 1rem; backdrop-filter: blur(10px);">
+        <h4 style="color: #60A5FA; margin-bottom: 1rem;">3. Execution & Monitoring</h4>
+        <p style="color: #D1D5DB;">Scripts are executed through Rankalf's secure environment with real-time monitoring and debugging capabilities.</p>
+      </div>
+    </div>
+    <p style="text-align: center; margin-top: 2rem; color: #9CA3AF;">Powered by <a href="http://www.rankalfexecutor.ct.ws/" style="color: #60A5FA; text-decoration: none;" target="_blank">Rankalf Executor</a>'s trusted API</p>
+  </section>
+
   <section id="tutorial" class="tutorial">
-    <h3>Tutorials</h3>
-    <ul>
-      <div><strong>How do i</strong> <a href="#">install.</a></div>
+    <h3>Installation Guide</h3>
+    <ul style="max-width: 768px; margin: 0 auto; color: #D1D5DB;">
+      <li><strong>Step 1:</strong> Download the Meteor ZIP package from below</li>
+      <li><strong>Step 2:</strong> Extract to a folder (like Program Files)</li>
+      <li><strong>Step 3:</strong> Create shortcut of meteor.exe on desktop</li>
+      <li><strong>Step 4:</strong> Launch Roblox and join a game</li>
+      <li><strong>Step 5:</strong> Run Meteor, attach to Roblox, and execute scripts!</li>
     </ul>
   </section>
 
   <section id="download" class="download">
     <h3>Download Meteor</h3>
-    <p style="color: #9CA3AF; font-size: 1.125rem; margin-bottom: 1rem;">⚠This is a Beta some things might not work.⚠</p>
-    <a href="https://mega.nz/file/zZsgzKiD#Z3WedkfEudKrCfivayerwhX0RAglHXx4WI8wTE7jVS0">Download for Windows</a>
+    <p style="color: #9CA3AF; font-size: 1.125rem; margin-bottom: 1rem;">Current Version: v1.2.5 Beta (Updated: 2025-01-15)</p>
+    <p style="color: #9CA3AF; font-size: 1.125rem; margin-bottom: 1.5rem;">⚠ Beta version - Some features may be experimental ⚠</p>
+    <div style="display: flex; gap: 1rem; justify-content: center;">
+      <a href="https://mega.nz/file/zZsgzKiD#Z3WedkfEudKrCfivayerwhX0RAglHXx4WI8wTE7jVS0" style="background: #3B82F6;">Download for Windows</a>
+      <a href="#" style="background: #1F2937;">View Changelog</a>
+    </div>
   </section>
 
   <footer>
