@@ -3,239 +3,406 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Meteor Executor</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <title>Meteor Executor | Next-Gen Roblox Scripting</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            meteor: {
+              primary: '#3B82F6',
+              dark: '#0F172A',
+              darker: '#020617',
+              light: '#60A5FA',
+              accent: '#2563EB',
+            }
+          },
+          animation: {
+            'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'float': 'float 6s ease-in-out infinite',
+            'gradient': 'gradient 8s ease infinite',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-10px)' },
+            },
+            gradient: {
+              '0%, 100%': { 'background-position': '0% 50%' },
+              '50%': { 'background-position': '100% 50%' },
+            }
+          }
+        }
+      }
+    }
+  </script>
   <style>
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background-color: #000000;
-      color: white;
+    .gradient-text {
+      background: linear-gradient(90deg, #60A5FA 0%, #3B82F6 50%, #2563EB 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      background-size: 200% 200%;
+      animation: gradient 8s ease infinite;
     }
-    header, footer {
-      padding: 1.5rem;
-      border-bottom: 1px solid #374151;
+    .glow {
+      text-shadow: 0 0 10px rgba(59, 130, 246, 0.7);
     }
-    footer {
-      border-top: 1px solid #374151;
-      text-align: center;
-      font-size: 0.875rem;
-      color: #9CA3AF;
+    .nav-link {
+      position: relative;
     }
-    nav a {
-      color: #D1D5DB;
-      margin-left: 1rem;
-      text-decoration: none;
-      transition: color 0.3s ease;
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #3B82F6;
+      transition: width 0.3s ease;
     }
-    nav a:hover {
-      color: white;
-    }
-    .hero {
-      text-align: center;
-      padding: 5rem 1.5rem;
-    }
-    .hero h2 {
-      font-size: 3rem;
-      font-weight: 800;
-      color: white;
-    }
-    .hero p {
-      color: #9CA3AF;
-      margin-top: 1rem;
-      font-size: 1.125rem;
-    }
-    .btn-primary {
-      margin-top: 2rem;
-      display: inline-block;
-      padding: 0.75rem 2rem;
-      background: #1F2937;
-      border: none;
-      border-radius: 9999px;
-      font-size: 1.125rem;
-      color: white;
-      text-decoration: none;
-      transition: all 0.3s ease;
-    }
-    .btn-primary:hover {
-      opacity: 0.9;
-      transform: scale(1.03);
-    }
-    section {
-      padding: 4rem 1.5rem;
-    }
-    section h3 {
-      font-size: 2rem;
-      font-weight: 600;
-      margin-bottom: 1.5rem;
-      color: white;
-    }
-    .tutorials ul {
-      max-width: 768px;
-      margin: 0 auto;
-      list-style: none;
-      padding: 0;
-      color: #D1D5DB;
-    }
-    .tutorials li {
-      margin-bottom: 1rem;
-    }
-    .tutorials a {
-      color: #60A5FA;
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-    .tutorials a:hover {
-      text-decoration: underline;
-      color: #BFDBFE;
-    }
-    .download a {
-      display: inline-block;
-      background: #1F2937;
-      color: white;
-      padding: 0.75rem 1.5rem;
-      border: none;
-      border-radius: 9999px;
-      text-decoration: none;
-      transition: all 0.3s ease;
-    }
-    .download a:hover {
-      opacity: 0.9;
-      transform: scale(1.03);
-    }
-    h1 {
-      font-size: 1.5rem;
-      font-weight: bold;
-      color: white;
-    }
-    .screenshot {
-      text-align: center;
-      margin-top: 2rem;
-    }
-    .screenshot img {
-      max-width: 90%;
-      height: auto;
-      border-radius: 1rem;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .screenshot img:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
-    }
-    @keyframes pulse {
-      0% { opacity: 1; }
-      50% { opacity: 0.5; }
-      100% { opacity: 1; }
-    }
-    nav a:hover span span {
+    .nav-link:hover::after {
       width: 100%;
+    }
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+    }
+    .download-btn {
+      box-shadow: 0 4px 14px rgba(59, 130, 246, 0.4);
+    }
+    .download-btn:hover {
+      box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6);
+    }
+    .bg-pattern {
+      background-image: radial-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px);
+      background-size: 20px 20px;
     }
   </style>
 </head>
-<body>
-  <header style="background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid rgba(255,255,255,0.1);">
-    <div style="display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 1rem 1.5rem;">
-      <div style="display: flex; align-items: center; gap: 1rem;">
-        <img src="https://i.imgur.com/KE5BRZX.png" alt="Meteor Logo" style="width: 40px; height: 40px; filter: drop-shadow(0 0 5px rgba(59, 130, 246, 0.5));">
-        <h1 style="background: linear-gradient(90deg, #60A5FA 0%, #3B82F6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 1.5rem; font-weight: 800;">Meteor</h1>
+<body class="bg-meteor-darker text-gray-200 font-sans min-h-screen flex flex-col">
+  <!-- Header -->
+  <header class="sticky top-0 z-50 bg-meteor-dark/80 backdrop-blur-md border-b border-gray-800">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-meteor.primary to-meteor.accent flex items-center justify-center">
+          <i class="fas fa-meteor text-white text-lg"></i>
+        </div>
+        <h1 class="text-xl font-bold gradient-text">Meteor</h1>
       </div>
-      <nav style="display: flex; gap: 1.5rem;">
-        <a href="#features" style="color: #D1D5DB; text-decoration: none; font-weight: 500; transition: all 0.3s ease; position: relative; padding: 0.5rem 0;">
-          <span style="position: relative;">
-            Features
-            <span style="position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: #3B82F6; transition: width 0.3s ease;"></span>
-          </span>
-        </a>
-        <a href="#how-it-works" style="color: #D1D5DB; text-decoration: none; font-weight: 500; transition: all 0.3s ease; position: relative; padding: 0.5rem 0;">
-          <span style="position: relative;">
-            How It Works
-            <span style="position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: #3B82F6; transition: width 0.3s ease;"></span>
-          </span>
-        </a>
-        <a href="#download" style="color: #D1D5DB; text-decoration: none; font-weight: 500; transition: all 0.3s ease; position: relative; padding: 0.5rem 0;">
-          <span style="position: relative;">
-            Download
-            <span style="position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: #3B82F6; transition: width 0.3s ease;"></span>
-          </span>
-        </a>
-        <a href="https://discord.gg/6PTAGG96Cm" style="color: #D1D5DB; text-decoration: none; font-weight: 500; transition: all 0.3s ease; display: flex; align-items: center; gap: 0.5rem;">
+      
+      <nav class="hidden md:flex items-center space-x-8">
+        <a href="#features" class="nav-link text-gray-300 hover:text-white transition-colors duration-300">Features</a>
+        <a href="#how-it-works" class="nav-link text-gray-300 hover:text-white transition-colors duration-300">How It Works</a>
+        <a href="#tutorial" class="nav-link text-gray-300 hover:text-white transition-colors duration-300">Tutorial</a>
+        <a href="#download" class="nav-link text-gray-300 hover:text-white transition-colors duration-300">Download</a>
+        <a href="https://discord.gg/2sP9Bdm5KY" class="flex items-center space-x-2 text-gray-300 hover:text-white transition-colors duration-300">
           <span>Discord</span>
-          <span style="display: inline-block; width: 8px; height: 8px; background: #3B82F6; border-radius: 50%; animation: pulse 1.5s infinite;"></span>
+          <span class="w-2 h-2 rounded-full bg-meteor.primary animate-pulse-slow"></span>
         </a>
       </nav>
+      
+      <button class="md:hidden text-gray-300 hover:text-white">
+        <i class="fas fa-bars text-xl"></i>
+      </button>
     </div>
   </header>
 
-  <main class="hero" style="background: linear-gradient(135deg, #000000 0%, #1a1a2e 100%); padding: 6rem 1.5rem; position: relative; overflow: hidden;">
-    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('https://i.imgur.com/KE5BRZX.png') center/contain no-repeat; opacity: 0.03; z-index: 0;"></div>
-    <div style="position: relative; z-index: 1; max-width: 800px; margin: 0 auto;">
-      <h2 style="font-size: 4rem; background: linear-gradient(90deg, #60A5FA 0%, #3B82F6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1.5rem;">Meteor Executor</h2>
-      <p style="font-size: 1.25rem; color: #D1D5DB; margin-bottom: 2rem;">The next-generation Roblox executor with military-grade security powered by Rankalf's API</p>
-      <div style="display: flex; gap: 1rem; justify-content: center;">
-        <a href="#download" class="btn-primary" style="background: linear-gradient(90deg, #3B82F6 0%, #2563EB 100%); box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);">Download Now</a>
-        <a href="#how-it-works" style="display: inline-block; padding: 0.75rem 2rem; border: 1px solid #3B82F6; border-radius: 9999px; font-size: 1.125rem; color: #3B82F6; text-decoration: none; transition: all 0.3s ease;">Learn More</a>
+  <!-- Hero Section -->
+  <main class="flex-grow bg-meteor-dark bg-pattern">
+    <section class="container mx-auto px-4 py-20 md:py-32 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10">
+        <div class="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-meteor.primary filter blur-3xl opacity-20 animate-float"></div>
+        <div class="absolute top-1/3 right-1/4 w-72 h-72 rounded-full bg-meteor.accent filter blur-3xl opacity-20 animate-float" style="animation-delay: 1s;"></div>
+      </div>
+      
+      <div class="relative z-10 max-w-4xl mx-auto text-center">
+        <h2 class="text-4xl md:text-6xl font-bold mb-6 gradient-text glow">Meteor Executor</h2>
+        <p class="text-xl md:text-2xl text-gray-300 mb-10 max-w-3xl mx-auto">
+          The most advanced Roblox executor with military-grade security powered by Rankalf's API
+        </p>
+        
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+          <a href="#download" class="px-8 py-4 bg-gradient-to-r from-meteor.primary to-meteor.accent text-white font-semibold rounded-full transition-all duration-300 transform hover:scale-105 download-btn">
+            Download Now <i class="fas fa-arrow-down ml-2"></i>
+          </a>
+          <a href="#how-it-works" class="px-8 py-4 border border-meteor.primary text-meteor.primary font-semibold rounded-full transition-all duration-300 hover:bg-meteor.primary/10">
+            Learn More <i class="fas fa-chevron-right ml-2"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Screenshot -->
+    <div class="container mx-auto px-4 pb-20 max-w-6xl">
+      <div class="rounded-xl overflow-hidden border border-gray-800 shadow-2xl transition-all duration-500 hover:shadow-meteor.primary/20">
+        <img src="https://i.imgur.com/2Bt40yg.png" alt="Meteor Debugger Interface" class="w-full h-auto">
       </div>
     </div>
   </main>
 
-  <div class="screenshot">
-    <img src="https://i.imgur.com/2Bt40yg.png" alt="Meteor Debugger Screenshot">
-  </div>
-
-  <section id="features">
-    <h3>Key Features</h3>
-    <ul style="max-width: 768px; margin: 0 auto; color: #D1D5DB;">
-      <li>✔️ Easy-to-use interface with dark theme</li>
-      <li>✔️ Built-in script hub with auto-updates</li>
-      <li>✔️ Advanced debugging tools</li>
-      <li>✔️ Frequent updates with new features</li>
-      <li>✔️ Lightweight and fast performance</li>
-    </ul>
-  </section>
-
-  <section id="how-it-works" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); padding: 4rem 1.5rem; border-radius: 1rem; margin: 2rem auto; max-width: 1200px;">
-    <h3 style="text-align: center; font-size: 2rem; margin-bottom: 2rem;">How It Works</h3>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
-      <div style="background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 1rem; backdrop-filter: blur(10px);">
-        <h4 style="color: #60A5FA; margin-bottom: 1rem;">1. Secure Connection</h4>
-        <p style="color: #D1D5DB;">Meteor establishes a secure connection with Rankalf's trusted API to ensure safe script execution without detection.</p>
+  <!-- Features Section -->
+  <section id="features" class="py-20 bg-meteor-dark">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-16">
+        <h3 class="text-3xl md:text-4xl font-bold mb-4 gradient-text">Key Features</h3>
+        <p class="text-gray-400 max-w-2xl mx-auto">Experience the power of next-generation Roblox scripting with these cutting-edge features</p>
       </div>
-      <div style="background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 1rem; backdrop-filter: blur(10px);">
-        <h4 style="color: #60A5FA; margin-bottom: 1rem;">2. Advanced Injection</h4>
-        <p style="color: #D1D5DB;">Our proprietary injection method bypasses anti-cheat systems while maintaining stability and performance.</p>
-      </div>
-      <div style="background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 1rem; backdrop-filter: blur(10px);">
-        <h4 style="color: #60A5FA; margin-bottom: 1rem;">3. Execution & Monitoring</h4>
-        <p style="color: #D1D5DB;">Scripts are executed through Rankalf's secure environment with real-time monitoring and debugging capabilities.</p>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="feature-card bg-meteor-darker p-8 rounded-xl border border-gray-800 transition-all duration-300 hover:border-meteor.primary/50">
+          <div class="w-12 h-12 rounded-lg bg-meteor.primary/10 flex items-center justify-center mb-4">
+            <i class="fas fa-bolt text-meteor.primary text-xl"></i>
+          </div>
+          <h4 class="text-xl font-semibold mb-3">Lightning Fast</h4>
+          <p class="text-gray-400">Optimized for performance with near-instant script execution and minimal resource usage.</p>
+        </div>
+        
+        <div class="feature-card bg-meteor-darker p-8 rounded-xl border border-gray-800 transition-all duration-300 hover:border-meteor.primary/50">
+          <div class="w-12 h-12 rounded-lg bg-meteor.primary/10 flex items-center justify-center mb-4">
+            <i class="fas fa-shield-alt text-meteor.primary text-xl"></i>
+          </div>
+          <h4 class="text-xl font-semibold mb-3">Military-Grade Security</h4>
+          <p class="text-gray-400">Advanced encryption and Rankalf's secure API ensure your account stays protected.</p>
+        </div>
+        
+        <div class="feature-card bg-meteor-darker p-8 rounded-xl border border-gray-800 transition-all duration-300 hover:border-meteor.primary/50">
+          <div class="w-12 h-12 rounded-lg bg-meteor.primary/10 flex items-center justify-center mb-4">
+            <i class="fas fa-code text-meteor.primary text-xl"></i>
+          </div>
+          <h4 class="text-xl font-semibold mb-3">Built-in Script Hub</h4>
+          <p class="text-gray-400">Access hundreds of scripts with auto-updates and community ratings.</p>
+        </div>
+        
+        <div class="feature-card bg-meteor-darker p-8 rounded-xl border border-gray-800 transition-all duration-300 hover:border-meteor.primary/50">
+          <div class="w-12 h-12 rounded-lg bg-meteor.primary/10 flex items-center justify-center mb-4">
+            <i class="fas fa-bug text-meteor.primary text-xl"></i>
+          </div>
+          <h4 class="text-xl font-semibold mb-3">Advanced Debugging</h4>
+          <p class="text-gray-400">Powerful debugging tools with real-time error reporting and stack traces.</p>
+        </div>
+        
+        <div class="feature-card bg-meteor-darker p-8 rounded-xl border border-gray-800 transition-all duration-300 hover:border-meteor.primary/50">
+          <div class="w-12 h-12 rounded-lg bg-meteor.primary/10 flex items-center justify-center mb-4">
+            <i class="fas fa-sync-alt text-meteor.primary text-xl"></i>
+          </div>
+          <h4 class="text-xl font-semibold mb-3">Frequent Updates</h4>
+          <p class="text-gray-400">Regular updates with new features, security patches, and performance improvements.</p>
+        </div>
+        
+        <div class="feature-card bg-meteor-darker p-8 rounded-xl border border-gray-800 transition-all duration-300 hover:border-meteor.primary/50">
+          <div class="w-12 h-12 rounded-lg bg-meteor.primary/10 flex items-center justify-center mb-4">
+            <i class="fas fa-palette text-meteor.primary text-xl"></i>
+          </div>
+          <h4 class="text-xl font-semibold mb-3">Customizable UI</h4>
+          <p class="text-gray-400">Multiple themes and layout options to personalize your scripting experience.</p>
+        </div>
       </div>
     </div>
-    <p style="text-align: center; margin-top: 2rem; color: #9CA3AF;">Powered by <a href="http://www.rankalfexecutor.ct.ws/" style="color: #60A5FA; text-decoration: none;" target="_blank">Rankalf Executor</a>'s trusted API</p>
   </section>
 
-  <section id="tutorial" class="tutorial">
-    <h3>Installation Guide</h3>
-    <ul style="max-width: 768px; margin: 0 auto; color: #D1D5DB;">
-      <li><strong>Step 1:</strong> Download the Meteor ZIP package from below</li>
-      <li><strong>Step 2:</strong> Extract to a folder (like Program Files)</li>
-      <li><strong>Step 3:</strong> Create shortcut of meteor.exe on desktop</li>
-      <li><strong>Step 4:</strong> Launch Roblox and join a game</li>
-      <li><strong>Step 5:</strong> Run Meteor, attach to Roblox, and execute scripts!</li>
-    </ul>
-  </section>
-
-  <section id="download" class="download">
-    <h3>Download Meteor</h3>
-    <p style="color: #9CA3AF; font-size: 1.125rem; margin-bottom: 1rem;">Current Version: v1.2.5 Beta (Updated: 2025-01-15)</p>
-    <p style="color: #9CA3AF; font-size: 1.125rem; margin-bottom: 1.5rem;">⚠ Beta version - Some features may be experimental ⚠</p>
-    <div style="display: flex; gap: 1rem; justify-content: center;">
-      <a href="https://mega.nz/file/zZsgzKiD#Z3WedkfEudKrCfivayerwhX0RAglHXx4WI8wTE7jVS0" style="background: #3B82F6;">Download for Windows</a>
-      <a href="#" style="background: #1F2937;">View Changelog</a>
+  <!-- How It Works Section -->
+  <section id="how-it-works" class="py-20 bg-gradient-to-br from-meteor-dark to-meteor-darker">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-16">
+        <h3 class="text-3xl md:text-4xl font-bold mb-4 gradient-text">How Meteor Works</h3>
+        <p class="text-gray-400 max-w-2xl mx-auto">Our proprietary technology ensures safe and reliable script execution</p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div class="bg-meteor-dark/50 backdrop-blur-sm p-8 rounded-xl border border-gray-800">
+          <div class="flex items-center mb-4">
+            <div class="w-10 h-10 rounded-full bg-meteor.primary/10 flex items-center justify-center mr-4">
+              <span class="text-meteor.primary font-bold">1</span>
+            </div>
+            <h4 class="text-xl font-semibold">Secure Connection</h4>
+          </div>
+          <p class="text-gray-400">Meteor establishes an encrypted tunnel to Rankalf's API, ensuring all communications are protected from detection.</p>
+        </div>
+        
+        <div class="bg-meteor-dark/50 backdrop-blur-sm p-8 rounded-xl border border-gray-800">
+          <div class="flex items-center mb-4">
+            <div class="w-10 h-10 rounded-full bg-meteor.primary/10 flex items-center justify-center mr-4">
+              <span class="text-meteor.primary font-bold">2</span>
+            </div>
+            <h4 class="text-xl font-semibold">Advanced Injection</h4>
+          </div>
+          <p class="text-gray-400">Our unique memory manipulation techniques bypass anti-cheat systems while maintaining game stability.</p>
+        </div>
+        
+        <div class="bg-meteor-dark/50 backdrop-blur-sm p-8 rounded-xl border border-gray-800">
+          <div class="flex items-center mb-4">
+            <div class="w-10 h-10 rounded-full bg-meteor.primary/10 flex items-center justify-center mr-4">
+              <span class="text-meteor.primary font-bold">3</span>
+            </div>
+            <h4 class="text-xl font-semibold">Execution & Monitoring</h4>
+          </div>
+          <p class="text-gray-400">Scripts run in a sandboxed environment with real-time monitoring to prevent crashes and detect errors.</p>
+        </div>
+      </div>
+      
+      <div class="text-center mt-12 text-gray-500">
+        Powered by <a href="http://www.rankalfexecutor.ct.ws/" class="text-meteor.primary hover:underline" target="_blank">Rankalf Executor</a>'s trusted API
+      </div>
     </div>
   </section>
 
-  <footer>
-    © 2025 Meteor. All rights reserved.
+  <!-- Tutorial Section -->
+  <section id="tutorial" class="py-20 bg-meteor-dark">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-16">
+        <h3 class="text-3xl md:text-4xl font-bold mb-4 gradient-text">Quick Start Guide</h3>
+        <p class="text-gray-400 max-w-2xl mx-auto">Get up and running with Meteor in just a few simple steps</p>
+      </div>
+      
+      <div class="max-w-4xl mx-auto bg-meteor-darker rounded-xl border border-gray-800 p-8">
+        <div class="space-y-6">
+          <div class="flex items-start">
+            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-meteor.primary/10 flex items-center justify-center mr-4 mt-1">
+              <span class="text-meteor.primary font-bold">1</span>
+            </div>
+            <div>
+              <h4 class="text-lg font-semibold">Download the Package</h4>
+              <p class="text-gray-400">Get the latest Meteor ZIP file from our secure download server.</p>
+            </div>
+          </div>
+          
+          <div class="flex items-start">
+            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-meteor.primary/10 flex items-center justify-center mr-4 mt-1">
+              <span class="text-meteor.primary font-bold">2</span>
+            </div>
+            <div>
+              <h4 class="text-lg font-semibold">Extract Files</h4>
+              <p class="text-gray-400">Unzip to a trusted location like Program Files or your Documents folder.</p>
+            </div>
+          </div>
+          
+          <div class="flex items-start">
+            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-meteor.primary/10 flex items-center justify-center mr-4 mt-1">
+              <span class="text-meteor.primary font-bold">3</span>
+            </div>
+            <div>
+              <h4 class="text-lg font-semibold">Create Shortcut</h4>
+              <p class="text-gray-400">Right-click meteor.exe and create a desktop shortcut for easy access.</p>
+            </div>
+          </div>
+          
+          <div class="flex items-start">
+            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-meteor.primary/10 flex items-center justify-center mr-4 mt-1">
+              <span class="text-meteor.primary font-bold">4</span>
+            </div>
+            <div>
+              <h4 class="text-lg font-semibold">Launch Roblox</h4>
+              <p class="text-gray-400">Start Roblox and join any game where you want to execute scripts.</p>
+            </div>
+          </div>
+          
+          <div class="flex items-start">
+            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-meteor.primary/10 flex items-center justify-center mr-4 mt-1">
+              <span class="text-meteor.primary font-bold">5</span>
+            </div>
+            <div>
+              <h4 class="text-lg font-semibold">Run Meteor</h4>
+              <p class="text-gray-400">Start Meteor, attach to Roblox, and begin executing your scripts!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Download Section -->
+  <section id="download" class="py-20 bg-gradient-to-br from-meteor-darker to-meteor-dark">
+    <div class="container mx-auto px-4 text-center">
+      <div class="max-w-3xl mx-auto">
+        <h3 class="text-3xl md:text-4xl font-bold mb-6 gradient-text">Download Meteor</h3>
+        <div class="bg-meteor-dark/50 backdrop-blur-sm rounded-xl border border-gray-800 p-8 mb-8">
+          <div class="flex justify-center items-center mb-6">
+            <div class="px-4 py-2 bg-meteor.primary/10 rounded-full text-meteor.primary font-semibold">
+              Latest Version: v1.2.5 Beta
+            </div>
+          </div>
+          <p class="text-gray-400 mb-8">Updated: January 15, 2025 | <span class="text-yellow-400">Beta version - Some features may be experimental</span></p>
+          
+          <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <a href="https://mega.nz" class="px-8 py-4 bg-gradient-to-r from-meteor.primary to-meteor.accent text-white font-semibold rounded-full transition-all duration-300 transform hover:scale-105 download-btn flex items-center justify-center">
+              <i class="fab fa-windows mr-2"></i> Download for Windows
+            </a>
+            <a href="#" class="px-8 py-4 border border-gray-600 text-gray-300 font-semibold rounded-full transition-all duration-300 hover:bg-gray-800/50 flex items-center justify-center">
+              <i class="fas fa-list-ul mr-2"></i> View Changelog
+            </a>
+          </div>
+        </div>
+        
+        <div class="text-gray-500 text-sm">
+          <p>System Requirements: Windows 10/11 64-bit | 4GB RAM | .NET Framework 4.8</p>
+          <p class="mt-2">By downloading, you agree to our <a href="#" class="text-meteor.primary hover:underline">Terms of Service</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-meteor-dark border-t border-gray-800 py-8">
+    <div class="container mx-auto px-4">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <div class="flex items-center space-x-3 mb-4 md:mb-0">
+          <div class="w-8 h-8 rounded-full bg-gradient-to-br from-meteor.primary to-meteor.accent flex items-center justify-center">
+            <i class="fas fa-meteor text-white text-sm"></i>
+          </div>
+          <span class="font-bold gradient-text">Meteor Executor</span>
+        </div>
+        
+        <div class="flex space-x-6 mb-4 md:mb-0">
+          <a href="https://discord.gg/2sP9Bdm5KY" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-discord"></i></a>
+          <a href="https://github.com/burntballsmp4" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-github"></i></a>
+        </div>
+        
+        <div class="text-gray-500 text-sm">
+          © 2025 Meteor Executor. All rights reserved.
+        </div>
+      </div>
+    </div>
   </footer>
+
+  <!-- Back to Top Button -->
+  <button id="back-to-top" class="fixed bottom-8 right-8 w-12 h-12 rounded-full bg-meteor.primary text-white flex items-center justify-center shadow-lg transition-all duration-300 opacity-0 invisible hover:bg-meteor.accent">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <script>
+    // Back to Top Button
+    const backToTopButton = document.getElementById('back-to-top');
+    
+    window.addEventListener('scroll', () => {
+      if (window.pageYOffset > 300) {
+        backToTopButton.classList.remove('opacity-0', 'invisible');
+        backToTopButton.classList.add('opacity-100', 'visible');
+      } else {
+        backToTopButton.classList.remove('opacity-100', 'visible');
+        backToTopButton.classList.add('opacity-0', 'invisible');
+      }
+    });
+    
+    backToTopButton.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+    
+    // Mobile menu toggle would go here
+    // const mobileMenuButton = document.querySelector('header button');
+    // const mobileMenu = document.createElement('div'); // You would create a mobile menu
+    // mobileMenuButton.addEventListener('click', () => {
+    //   // Toggle mobile menu visibility
+    // });
+  </script>
 </body>
 </html>
